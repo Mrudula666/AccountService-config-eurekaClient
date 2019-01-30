@@ -18,7 +18,13 @@ public interface AccountServiceInterface {
 
 	void updateAccount(Account updatedAccount);
 
+
 	Double getCurrentBalance(int accountNumber);
+
+
+	void updateBalance(Account updatedAccount);
+
+	
 
 	
 

@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.app.accountservice.entity.Account;
-import com.cg.app.accountservice.entity.SavingsAccount;
 import com.cg.app.accountservice.service.AccountServiceInterface;
+import com.cg.app.transactionservice.entity.Transaction;
 
 @RestController
 @RequestMapping("/accounts")
 public class AccountResource {
 	@Autowired
 	private AccountServiceInterface service;
-	private SavingsAccount savingAccount;
+	/* private SavingsAccount savingAccount; */
 
 	/*
 	 * @GetMapping private String getAccounts() { System.out.println("Ujj"); return
@@ -52,14 +52,16 @@ public class AccountResource {
 		return service.getAccountById(accountNumber);
 	}
 
-	@PutMapping("/{accountNumber}")
-	private void updateBalance(@PathVariable int accountNumber, @RequestParam("currentBalance") double currentBalance) {
-		Optional<Account> entity = service.getAccountById(accountNumber);
-		Account updatedAccount = entity.get();
-		updatedAccount.setCurrentBalance(currentBalance);
-		System.out.println(currentBalance);
-		service.updateAccount(updatedAccount);
-	}
+	
+	/*
+	 * @PutMapping("/{accountNumber}") private void updateBalance(@PathVariable int
+	 * accountNumber, @RequestParam("currentBalance") double currentBalance) {
+	 * Optional<Account> entity = service.getAccountById(accountNumber); Account
+	 * updatedAccount = entity.get();
+	 * updatedAccount.setCurrentBalance(currentBalance);
+	 * System.out.println(currentBalance); service.updateBalance(updatedAccount); }
+	 */
+	 
 
 	@GetMapping("/{accountNumber}/balance")
 	private Double getCurrentBalance(@PathVariable Integer accountNumber) {
@@ -71,6 +73,17 @@ public class AccountResource {
 		Optional<Account> entity = service.getAccountById(accountNumber);
 		Account updatedAccount = entity.get();
 		service.updateAccount(updatedAccount);
+	}
+
+
+	public void updateBalance(Transaction transaction) {
+		Optional<Account> entity = service.getAccountById(transaction.getAccountNumber());
+		Account updatedAccount = entity.get();
+		updatedAccount.setCurrentBalance(transaction.getCurrentBalance());
+		
+		 Double currentBalance = transaction.getCurrentBalance();
+		System.out.println("Updated balance: "+currentBalance ); 
+		service.updateBalance(updatedAccount);		
 	}
 
 }

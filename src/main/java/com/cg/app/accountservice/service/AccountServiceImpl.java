@@ -20,11 +20,13 @@ public class AccountServiceImpl implements AccountServiceInterface {
 
 		return repository.findAll();
 	}
+
 	@Override
 	public void addAccount(Account account) {
 		repository.save(account);
-		
+
 	}
+
 	@Override
 	public void deleteAccount(int accountNumber) {
 		repository.deleteById(accountNumber);
@@ -34,29 +36,28 @@ public class AccountServiceImpl implements AccountServiceInterface {
 	@Override
 	public Optional<Account> getAccountById(int accountNumber) {
 		Optional<Account> account = repository.findById(accountNumber);
-		
+
 		return account;
 	}
 
 	@Override
 	public void updateAccount(Account updatedAccount) {
 		repository.save(updatedAccount);
-		
+
 	}
 
 	@Override
 	public Double getCurrentBalance(int accountNumber) {
-		
-	
-		Optional<Account> account =  repository.findById(accountNumber);
-		return account.get().getCurrentBalance();
-		 
+
+		Optional<Account> account = repository.findById(accountNumber);
+		Double currentBalance=account.get().getCurrentBalance();
+		return currentBalance;
+
 	}
 
-
-
-	
-
-	
+	@Override
+	public void updateBalance(Account updatedAccount) {
+		repository.save(updatedAccount);
+	}
 
 }
